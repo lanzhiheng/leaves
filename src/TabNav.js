@@ -11,10 +11,6 @@ class TabNav extends Component {
     onTabClick: PropTypes.func
   }
 
-  static defaultProps = {
-    onTabClick: () => {}
-  }
-
   getTabs() {
     const { panels, classPrefix, activeIndex } = this.props
 

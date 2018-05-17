@@ -1,20 +1,10 @@
-.btn {
-  color: #fff;
+.tabs-tab.tabs-active {
   background: red;
-  padding: 4px 10px;
-  border-radius: 2px;
-  border: 1px solid;
-  cursor: pointer;
 }
 
-.border {
-  border: 1px solid red;
+.tabs-panel {
 }
 
-.btn-blue {
-  background: blue;
-}
-
-.btn-green {
-  background: #0ff;
+.tabs-panel.tabs-active {
+  background: red;
 }
