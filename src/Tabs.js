@@ -33,7 +33,7 @@ class Tabs extends Component {
     this.handleTabClick = this.handleTabClick.bind(this)
 
     if ('activeIndex' in currProps) {
-      activeIndex = currProps
+      activeIndex = currProps.activeIndex
     } else if ('defaultActiveIndex' in currProps) {
       activeIndex = currProps.defaultActiveIndex
     }
@@ -41,6 +41,14 @@ class Tabs extends Component {
     this.state = {
       activeIndex,
       prevIndex: activeIndex
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ('activeIndex' in nextProps) {
+      this.setState({
+        activeIndex: nextProps.activeIndex
+      })
     }
   }
 
@@ -59,7 +67,6 @@ class Tabs extends Component {
 
   renderTabNav() {
     const { classPrefix, children } = this.props
-    console.log(children);
 
     return (
       <TabNav
