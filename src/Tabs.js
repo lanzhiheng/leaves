@@ -28,9 +28,9 @@ class Tabs extends Component {
 
     const currProps = this.props
 
-    let activeIndex
-
     this.handleTabClick = this.handleTabClick.bind(this)
+
+    let activeIndex
 
     if ('activeIndex' in currProps) {
       activeIndex = currProps.activeIndex
@@ -72,7 +72,7 @@ class Tabs extends Component {
       <TabNav
         key="tabBar"
         classPrefix={classPrefix}
-        onTabClick={this.handleTabClick}
+        onTabClick={ this.handleTabClick }
         panels={children}
         activeIndex={this.state.activeIndex}
         >

@@ -1,36 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createReactClass from 'create-react-class'
-import TabPane from './TabPane'
-import Tabs from './Tabs'
-import './index.css'
+import styles from './index.css'
+
+console.log(styles);
 
 const Wrap = createReactClass({
   getInitialState: function() {
+    this.textInput = React.createRef()
     return {
-      index: 1
+      area: [],
+      value: '',
     };
   },
 
-  handleChange(event) {
+  handleSelectChange(event) {
+    const { options } = event.target
+    const area = Object.keys(options).filter(i => options[i].selected === true).map(i => options[i].value)
+
     this.setState({
-      index: parseInt(event.target.value)
+      area
     })
   },
 
+  handleSubmit(e) {
+    e.preventDefault()
+    const current = this.textInput.current
+    console.log(current.value)
+  },
+
   render() {
+    const { area } = this.state
+
+    const style = {
+      color: 'red',
+      height: 100,
+      width: 400,
+    }
+
     return (
       <div>
-        <select value={this.state.index} onChange={this.handleChange}>
-          <option val="1">1</option>
-          <option val="2">2</option>
-          <option val="3">3</option>
+        <form onSubmit={this.handleSubmit}>
+          <input ref={this.textInput} type="text" defaultValue="hangzhou" />
+          <button type="submit">Submit</button>
+        </form>
+
+        <input value={this.state.value} onChange={ e => { this.setState({ value: e.target.value.toUpperCase() }) } } />
+        <select style={style} value={area} multiple={true} onChange={this.handleSelectChange}>
+          <option value="bejing">北京</option>
+          <option value="shanghai">上海</option>
+          <option value="hangzhou">杭州</option>
         </select>
-        <Tabs activeIndex={this.state.index}>
-          <TabPane order="1" tab={'Tab 1'}>Ruby</TabPane>
-          <TabPane order="2" tab={'Tab 2'}>Hello World</TabPane>
-          <TabPane order="3" tab={'Tab 3'}>Good Nice</TabPane>
-        </Tabs>
       </div>
     )
   }
