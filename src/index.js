@@ -1,41 +1,62 @@
 import './index.css'
-import React, { Component } from 'react/umd/react.development';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { CommentStore, CommentAction } from './store/CommentStore'
+import { Provider, connect } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return Object.assign({}, state, {counter: state.counter + 1})
+    case 'DECREMENT':
+      return Object.assign({}, state, {counter: state.counter - 1})
+    default:
+      return state
+  }
+}
+
+let logMiddle = (store) => (dispatch) => (action) => {
+  console.log('dispatch', action.type);
+  dispatch(action)
+  console.log(store.getState());
+  console.log('finish', action.type);
+}
+
+let store = applyMiddleware(logMiddle)(createStore)(reducer, {counter: 3, number: 4})
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      comments: CommentStore.getComment()
-    }
-
-    this._onChange = this._onChange.bind(this)
-  }
-
-  _onChange() {
-    this.setState({
-      comments: CommentStore.getComment()
-    })
-  }
-
-  componentDidMount() {
-    CommentStore.addChangeListener(this._onChange)
-    CommentAction.loadComment()
-  }
-
   render() {
-    const { comments } = this.state
+    const { increment, decrement, counter } = this.props
 
     return (
-      <ul>
-        {comments.map(comment => <li key={comment.id}>{comment.content}</li>)}
-      </ul>
+      <div className="counter">
+        <button onClick={decrement}>-</button>
+        <input value={counter} readOnly />
+        <button onClick={increment}>+</button>
+      </div>
     )
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    counter: state.counter
+  }
+}
+const mapDispatchToProps = dispatch => ({
+  increment: () => dispatch({
+    type: 'INCREMENT'
+  }),
+  decrement: () => dispatch({
+    type: 'DECREMENT'
+  })
+})
+
+const NewApp = connect(mapStateToProps, mapDispatchToProps)(App)
+
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <NewApp />
+  </Provider>,
   document.getElementById('root')
 );
