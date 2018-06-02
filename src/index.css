@@ -3,3 +3,59 @@ input {
   padding: 0.5em 0.8em;
   font-size: 16px;
 }
+
+.base {
+  color: green;
+  border: 1px solid black;
+}
+
+ul {
+  padding: 0;
+  list-style: 0;
+}
+
+.dark {
+  background: #f00;
+}
+
+.light {
+  background: #cecece;
+}
+
+.btn {
+  border: 1px solid;
+  padding: 0.5em 1em;
+  background: #f392e3;
+  color: #fff;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+
+.example-appear {
+  opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
